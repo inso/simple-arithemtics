@@ -19,7 +19,7 @@
             </div>
 
             <div class="row" v-show="mode == 'stopped'" v-for="(operation, operationId) in operations">
-                <div class="col-xs-4"><label><input type="radio" v-bind:value="operationId" v-model="operationName" /> {{ operation.title() }}</label></div>
+                <div class="col-xs-4"><label><input type="radio" v-bind:value="operationId" v-model="operationName" /> {{ operation.title() }} ({{ operation.symbol() }})</label></div>
             </div>
 
             <div class="row center" v-show="mode == 'stopped'">
