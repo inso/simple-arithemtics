@@ -3,16 +3,16 @@
         return Math.floor(Math.random() * (max - min + 1) + min);
     };
 
-    function SubtractionOperation(min, max) {
-        this.min = min;
-        this.max = max;
-    }
+    function SubtractionOperation() {}
+    SubtractionOperation.prototype.title = function () {
+        return 'Subtraction';
+    };
     SubtractionOperation.prototype.symbol = function () {
         return '-';
     };
-    SubtractionOperation.prototype.numbers = function () {
-        var number1 = getRandomInt(this.min + 1, this.max);
-        var number2 = getRandomInt(this.min, number1 - 1);
+    SubtractionOperation.prototype.numbers = function (min, max) {
+        var number1 = getRandomInt(min + 1, max);
+        var number2 = getRandomInt(min, number1 - 1);
 
         return [number1, number2];
     };
@@ -20,22 +20,23 @@
         return number1 - number2;
     };
 
-    function AdditionOperation(min, max) {
-        this.min = min;
-        this.max = max;
-    }
+    function AdditionOperation() {}
+    AdditionOperation.prototype.title = function () {
+        return 'Addition';
+    };
     AdditionOperation.prototype.symbol = function () {
         return '+';
     };
-    AdditionOperation.prototype.numbers = function () {
-        var number1 = getRandomInt(this.min, this.max);
-        var number2 = getRandomInt(this.min, this.max);
+    AdditionOperation.prototype.numbers = function (min, max) {
+        var number1 = getRandomInt(min, max);
+        var number2 = getRandomInt(min, max);
 
         return [number1, number2];
     };
     AdditionOperation.prototype.answer = function (number1, number2) {
         return number1 + number2;
     };
+
     var buildIntModelTransformer = function (fieldName) {
         return {
             get: function () {
@@ -55,6 +56,10 @@
         el: "#app",
         data: {
             operationName: 'sub',
+            operations: {
+                'sub': new SubtractionOperation(),
+                'add': new AdditionOperation(),
+            },
             min: 1,
             max: 20,
             maxPreviousCorrectAnswersCount: 10,
@@ -85,13 +90,7 @@
             rawMin: buildIntModelTransformer('min'),
             rawMax: buildIntModelTransformer('max'),
             operation: function () {
-                if (this.operationName === 'add') {
-                    return new AdditionOperation(this.min, this.max);
-                } else if (this.operationName === 'sub') {
-                    return new SubtractionOperation(this.min, this.max);
-                }
-
-                return null;
+                return this.operations[this.operationName];
             },
             previousCorrectAnswersCount: function () {
                 var minMaxBased = Math.floor((this.max - this.min) / 2);
@@ -126,7 +125,7 @@
                 var numbers, isBadNumbers, i = 0;
 
                 do {
-                    numbers = this.operation.numbers();
+                    numbers = this.operation.numbers(this.min, this.max);
                     isBadNumbers =
                         this.number1 === numbers[0]
                             ||
