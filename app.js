@@ -216,6 +216,10 @@
                     this.previousCorrectAnswers = [];
                     this.wrongAnswersCount = 0;
                     this.nextIteration();
+                } else if (value === 'result') {
+                    if (this.answersCount < 1) {
+                        this.mode = 'stopped';
+                    }
                 }
             },
             min: function (value) {
