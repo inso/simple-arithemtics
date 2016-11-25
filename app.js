@@ -69,7 +69,9 @@
             iterationStartTime: null,
             previousResults: [],
             previousCorrectAnswers: [],
-            wrongAnswersCount: 0
+            wrongAnswersCount: 0,
+            minTime: null,
+            maxTime: null
         },
         computed: {
             correctAnswer: function () {
@@ -99,6 +101,21 @@
                 }
 
                 return Math.min(this.maxPreviousCorrectAnswersCount, minMaxBased);
+            },
+            wrongAnswersCountPercentage: function () {
+                return this.wrongAnswersCount / this.answersCount * 100;
+            },
+            correctAnswersCount: function () {
+                return this.answersCount - this.wrongAnswersCount;
+            },
+            correctAnswersCountPercentage: function () {
+                return this.correctAnswersCount / this.answersCount * 100;
+            },
+            correctWrongAnswersRatio: function () {
+                return this.correctAnswersCount / this.wrongAnswersCount;
+            },
+            score: function () {
+                return (this.correctAnswersCountPercentage * (this.answersCount / 10)) / this.averageTime * 100;
             }
         },
         methods: {
@@ -149,6 +166,14 @@
                         this.averageTime += ((time - this.averageTime) / this.answersCount);
                     }
 
+                    if (this.minTime === null || this.minTime > time) {
+                        this.minTime = time;
+                    }
+
+                    if (this.maxTime === null || this.maxTime < time) {
+                        this.maxTime = time;
+                    }
+
                     if (this.previousCorrectAnswersCount > 0) {
                         this.previousCorrectAnswers = this.previousCorrectAnswers.slice(0, this.previousCorrectAnswersCount - 1);
                         this.previousCorrectAnswers.unshift(answer);
@@ -190,9 +215,13 @@
             }
         },
         filters: {
-            'float': function (value) {
+            'float': function (value, fraction) {
                 if (value !== null) {
-                    var result = parseFloat(value).toFixed(2);
+                    if (typeof(fraction) === 'undefined') {
+                        fraction = 2;
+                    }
+
+                    var result = parseFloat(value).toFixed(fraction);
 
                     if (!isNaN(result)) {
                         return result;
@@ -203,7 +232,7 @@
             },
             'int': function (value) {
                 if (value !== null && value >= 0) {
-                    return value;
+                    return parseInt(value);
                 }
 
                 return '-';

@@ -52,3 +52,10 @@
 .min-max {
     width: 30px;
 }
+.row.result {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.row.result.score {
+    font-size: x-large;
+}
