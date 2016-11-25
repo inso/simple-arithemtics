@@ -37,6 +37,23 @@
         return number1 + number2;
     };
 
+    function MultiplicationOperation() {}
+    MultiplicationOperation.prototype.title = function () {
+        return 'Multiplication';
+    };
+    MultiplicationOperation.prototype.symbol = function () {
+        return '*';
+    };
+    MultiplicationOperation.prototype.numbers = function (min, max) {
+        var number1 = getRandomInt(min, max);
+        var number2 = getRandomInt(min, max);
+
+        return [number1, number2];
+    };
+    MultiplicationOperation.prototype.answer = function (number1, number2) {
+        return number1 * number2;
+    };
+
     var buildIntModelTransformer = function (fieldName) {
         return {
             get: function () {
@@ -59,6 +76,7 @@
             operations: {
                 'sub': new SubtractionOperation(),
                 'add': new AdditionOperation(),
+                'mul': new MultiplicationOperation()
             },
             min: 1,
             max: 20,
