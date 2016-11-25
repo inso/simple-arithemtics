@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Simple Arithemtics</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="app.css">
+    </head>
+    <body>
+        <div id="app" class="container">
+            <div class="header clearfix">
+                <div class="col-xs-6 vcenter"><div class="text-muted title">Count learning {{ previousCorrectAnswersCount }}</div></div>
+                <div class="col-xs-2 col-xs-offset-3 vcenter">
+                    <button class="btn btn-lg btn-success" v-show="mode == 'stopped'" v-on:click="mode = 'started'">Start</button>
+                    <button class="btn btn-lg btn-danger" v-show="mode == 'started'" v-on:click="mode = 'result'">Stop</button>
+                    <button class="btn btn-lg btn-warning" v-show="mode == 'result'" v-on:click="mode = 'stopped'">Close</button>
+                </div>
+            </div>
+
+            <div class="row center" v-show="mode == 'stopped'">
+                <div class="col-xs-4"><label>Subtraction <input type="radio" value="sub" v-model="operationName" /></label></div>
+                <div class="col-xs-4"><label>Addition <input type="radio" value="add" v-model="operationName" /></label></div>
+            </div>
+
+            <div class="row center" v-show="mode == 'stopped'">
+                <div class="col-xs-4"><label>Min <input class="min-max" type="text" v-model="rawMin" maxlength="3" /></label></div>
+                <div class="col-xs-4"><label>Max <input class="min-max" type="text" v-model="rawMax" maxlength="3" /></label></div>
+            </div>
+
+            <div class="row center" v-show="mode == 'started' || mode == 'result'">
+                <div class="col-xs-4">Total Answers: <span class="stats-value">{{ answersCount | int }}</span></div>
+                <div class="col-xs-4">Wrong answers: <span class="stats-value">{{ wrongAnswersCount | int }}</span></div>
+                <div class="col-xs-4">Avg. answer time: <span class="stats-value">{{ averageTime | float }}</span></div>
+            </div>
+
+            <div class="row main-item center well" v-show="mode == 'started'">
+                <div class="col-xs-offset-1 col-xs-2">{{ number1 }}</div>
+                <div class="col-xs-2">{{ operation.symbol() }}</h2></div>
+                <div class="col-xs-2">{{ number2 }}</div>
+                <div class="col-xs-2">=</div>
+                <div class="col-xs-2"><input class="answer" type="text" maxlength="3" v-model="rawAnswer" v-focus v-on:keydown="answerSubmit" /></div>
+            </div>
+
+            <div class="row log-item center" v-show="mode == 'started'" v-for="item in previousResults" v-bind:class="{ 'error': item.wrong, 'success': !item.wrong }">
+                <div class="col-xs-offset-1 col-xs-2">{{ item.number1 }}</div>
+                <div class="col-xs-2">{{ operation.symbol() }}</div>
+                <div class="col-xs-2">{{ item.number2 }}</div>
+                <div class="col-xs-2">=</h2></div>
+                <div class="col-xs-2">{{ item.answer }}</div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.3/vue.min.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
