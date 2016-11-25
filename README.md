@@ -1,3 +1,3 @@
-# Simple Arithemtics
+# Simple Arithmetics
 
-Application to learn arithemtic for my son.
+Application to learn arithmetic for my son.
