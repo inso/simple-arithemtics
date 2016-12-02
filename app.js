@@ -132,7 +132,7 @@
                 return this.correctAnswersCount / this.wrongAnswersCount;
             },
             score: function () {
-                return (this.correctAnswersCountPercentage * (this.answersCount / 10)) / this.averageTime * 100;
+                return this.correctAnswersCountPercentage * this.correctAnswersCountPercentage * (this.correctAnswersCount / 10) / this.averageTime;
             }
         },
         methods: {
