@@ -180,7 +180,7 @@
                     if (this.averageTime === null) {
                         this.averageTime = time;
                     } else {
-                        this.averageTime += ((time - this.averageTime) / this.answersCount);
+                        this.averageTime += ((time - this.averageTime) / this.correctAnswersCount);
                     }
 
                     if (this.minTime === null || this.minTime > time) {
