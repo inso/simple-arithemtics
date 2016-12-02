@@ -242,10 +242,10 @@
                         fraction = 2;
                     }
 
-                    var result = parseFloat(value).toFixed(fraction);
+                    var result = parseFloat(value);
 
                     if (!isNaN(result)) {
-                        return result;
+                        return result.toFixed(fraction);
                     }
                 }
 
