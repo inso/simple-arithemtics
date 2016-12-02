@@ -229,7 +229,7 @@
         },
         directives: {
             focus: {
-                componentUpdated: function (el) {
+                inserted: function (el) {
                     el.focus();
                 }
             }
