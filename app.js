@@ -82,7 +82,6 @@
             max: 20,
             maxPreviousCorrectAnswersCount: 10,
             previousResultsCount: 5,
-            started: false,
             mode: 'stopped',
             number1: null,
             number2: null,
