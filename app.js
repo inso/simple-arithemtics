@@ -237,11 +237,11 @@
         },
         filters: {
             'float': function (value, fraction) {
-                if (value !== null) {
-                    if (typeof(fraction) === 'undefined') {
-                        fraction = 2;
-                    }
+                if (typeof(fraction) === 'undefined') {
+                    fraction = 2;
+                }
 
+                if (value !== null) {
                     var result = parseFloat(value);
 
                     if (!isNaN(result)) {
@@ -252,8 +252,12 @@
                 return '-';
             },
             'int': function (value) {
-                if (value !== null && value >= 0) {
-                    return parseInt(value);
+                if (value !== null) {
+                    var result = parseInt(value);
+
+                    if (!isNaN(result)) {
+                        return result;
+                    }
                 }
 
                 return '-';
