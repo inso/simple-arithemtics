@@ -89,6 +89,7 @@
             answersCount: 0,
             averageTime: null,
             iterationStartTime: null,
+            pauseStartTime: null,
             previousResults: [],
             previousCorrectAnswers: [],
             wrongAnswersCount: 0,
@@ -207,14 +208,20 @@
             }
         },
         watch: {
-            mode: function (value) {
+            mode: function (value, oldValue) {
                 if (value === 'started') {
-                    this.answersCount = 0;
-                    this.averageTime = null;
-                    this.previousResults = [];
-                    this.previousCorrectAnswers = [];
-                    this.wrongAnswersCount = 0;
-                    this.nextIteration();
+                    if (oldValue === 'stopped') {
+                        this.answersCount = 0;
+                        this.averageTime = null;
+                        this.previousResults = [];
+                        this.previousCorrectAnswers = [];
+                        this.wrongAnswersCount = 0;
+                        this.nextIteration();
+                    } else if (oldValue === 'paused') {
+                        this.iterationStartTime += (Date.now() - this.pauseStartTime);
+                    }
+                } else if (value === 'paused') {
+                    this.pauseStartTime = Date.now();
                 } else if (value === 'result') {
                     if (this.answersCount < 1) {
                         this.mode = 'stopped';

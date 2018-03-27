@@ -11,10 +11,11 @@
         <div id="app" class="container">
             <div class="header clearfix">
                 <div class="col-xs-6 vcenter"><div class="text-muted title">Simple Arithmetics</div></div>
-                <div class="col-xs-2 col-xs-offset-3 vcenter">
-                    <button class="btn btn-lg btn-success" v-if="mode == 'stopped'" v-on:click="mode = 'started'">Start</button>
-                    <button class="btn btn-lg btn-danger" v-else-if="mode == 'started'" v-on:click="mode = 'result'">Stop</button>
-                    <button class="btn btn-lg btn-warning" v-else-if="mode == 'result'" v-on:click="mode = 'stopped'">Close</button>
+                <div class="col-xs-5 vcenter">
+                    <button class="btn btn-lg btn-success" v-if="mode == 'stopped' || mode == 'paused'" v-on:click="mode = 'started'">Start</button>
+                    <button class="btn btn-lg btn-warning" v-if="mode == 'started'" v-on:click="mode = 'paused'">Pause</button>
+                    <button class="btn btn-lg btn-danger" v-if="mode == 'started'" v-on:click="mode = 'result'">Stop</button>
+                    <button class="btn btn-lg btn-warning" v-if="mode == 'result'" v-on:click="mode = 'stopped'">Close</button>
                 </div>
             </div>
 
@@ -26,6 +27,11 @@
                 <div class="row center" v-show="mode == 'stopped'">
                     <div class="col-xs-4"><label>Min <input class="min-max" type="text" v-model="rawMin" maxlength="3" /></label></div>
                     <div class="col-xs-4"><label>Max <input class="min-max" type="text" v-model="rawMax" maxlength="3" /></label></div>
+                </div>
+            </div>
+            <div v-else-if="mode == 'paused'">
+                <div class="row center">
+                    <h1>Pause</h1>
                 </div>
             </div>
             <div v-else-if="mode == 'started'">
