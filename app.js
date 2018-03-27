@@ -131,7 +131,7 @@
                 return this.correctAnswersCount / this.wrongAnswersCount;
             },
             score: function () {
-                return this.correctAnswersCountPercentage * this.correctAnswersCountPercentage * (this.correctAnswersCount / 10) / this.averageTime;
+                return Math.pow(this.correctAnswersCountPercentage, 2) * (this.correctAnswersCount / 10) / Math.pow(this.averageTime, 2);
             }
         },
         methods: {
