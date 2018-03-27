@@ -216,6 +216,10 @@
                         this.previousResults = [];
                         this.previousCorrectAnswers = [];
                         this.wrongAnswersCount = 0;
+                        this.minTime = null;
+                        this.maxTime = null;
+                        this.iterationStartTime = null;
+                        this.pauseStartTime = null;
                         this.nextIteration();
                     } else if (oldValue === 'paused') {
                         this.iterationStartTime += (Date.now() - this.pauseStartTime);
