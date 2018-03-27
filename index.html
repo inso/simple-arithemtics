@@ -31,8 +31,8 @@
             <div v-else-if="mode == 'started'">
                 <div class="row center">
                     <div class="col-xs-4">Answers: <span class="stats-value">{{ answersCount | int }}</span></div>
-                    <div class="col-xs-4">Wrong answers %: <span class="stats-value">{{ wrongAnswersCountPercentage | float(1) }}</span></div>
-                    <div class="col-xs-4">Avg. answer time: <span class="stats-value">{{ averageTime | float }}</span></div>
+                    <div class="col-xs-4">Correct answers %: <span class="stats-value">{{ correctAnswersCountPercentage | float(1) }}</span></div>
+                    <div class="col-xs-4">Score: <span class="stats-value">{{ score | int }}</span></div>
                 </div>
 
                 <div class="row main-item center well">
